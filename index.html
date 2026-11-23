@@ -1,69 +1,524 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Branson Turkey Trot | Live Animated Awards</title>
+
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101827;font-family:Arial,sans-serif}
-.awards{width:100%;height:100vh;padding:2.5vh 3vw;color:#fff;text-align:center;position:relative;overflow:hidden}
-.eyebrow{color:#E8B96A;font-size:clamp(11px,1.3vw,20px);font-weight:bold}
-h1{color:#F6E8CF;font-size:clamp(24px,4vw,64px);margin:1vh 0}
-h2{color:#E8B96A;font-size:clamp(18px,2.4vw,36px);margin:2vh 0 3vh}
-.podium{display:flex;justify-content:center;gap:1.5vw;width:100%}
-.medal{flex:1;min-width:0;padding:3vh 1vw;border-radius:12px;color:#171717;animation:appear .8s ease both}
-.silver{background:#C0C0C0;animation-delay:.2s}.gold{background:#DAA520;animation-delay:.4s}.bronze{background:#B87333;animation-delay:.6s}
-.place{font-size:clamp(24px,4vw,64px);font-weight:900}.name{font-size:clamp(14px,2vw,30px);font-weight:bold;margin:2vh 0;overflow-wrap:anywhere}.time{font-size:clamp(14px,1.8vw,28px);font-weight:bold}
-#status{color:#E8B96A;font-size:clamp(12px,1.2vw,18px);margin-top:1vh}
-@keyframes appear{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-/* Three broadcast-style banners stay below the winners. */
-.ticker-zone{position:absolute;bottom:3.4vh;left:0;width:100%;height:min(30vh,255px);display:flex;flex-direction:column;justify-content:space-around;gap:1vh;overflow:hidden;pointer-events:none}
-.ticker-row{height:31%;position:relative;overflow:hidden;background:linear-gradient(90deg,#101827 0%,#252017 8%,#252017 92%,#101827 100%);border-top:1px solid #8d6d28;border-bottom:1px solid #8d6d28;box-shadow:0 2px 10px #0007}
-.ticker-train{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;gap:1.2rem;width:max-content;white-space:nowrap;animation:cross-left 22s linear infinite;will-change:transform}
-.ticker-row:nth-child(2) .ticker-train{animation-name:cross-right;animation-duration:27s}
-.ticker-row:nth-child(3) .ticker-train{animation-duration:32s}
-.turkey{height:90%;width:auto;max-width:100px;object-fit:contain;flex-shrink:0;filter:drop-shadow(2px 2px 3px #0009)}
-.ticker-text{font-size:clamp(17px,2.2vw,34px);font-weight:900;color:#f7ce4d;letter-spacing:.02em;text-shadow:1px 2px 1px #000,0 0 8px #ad752c}
-.ticker-row:nth-child(2) .ticker-text{color:#e9b74b}.ticker-row:nth-child(3) .ticker-text{color:#f6d46e}
-@keyframes cross-left{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
-@keyframes cross-right{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
-.brand{position:absolute;bottom:.65vh;left:0;width:100%;font-size:clamp(10px,1vw,15px);color:#d4b879;font-weight:bold;letter-spacing:.12em}
-@media(max-width:600px){.awards{padding:2vh 2vw}.podium{gap:1vw}.medal{padding:2vh 1vw}.ticker-zone{height:25vh}.turkey{max-width:60px}}
-@media(max-height:600px){.awards{padding-top:1vh}h1{margin:0}h2{margin:1vh 0}.medal{padding-top:1vh;padding-bottom:1vh}.name{margin:1vh 0}.ticker-zone{height:28vh}}
-@media(prefers-reduced-motion:reduce){.ticker-train{animation-duration:70s}.medal{animation:none}}
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #101827;
+  font-family: Arial, sans-serif;
+}
+
+.awards {
+  width: 100%;
+  height: 100vh;
+  padding: 2.5vh 3vw;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: #E8B96A;
+  font-size: clamp(11px, 1.3vw, 20px);
+  font-weight: bold;
+}
+
+h1 {
+  color: #F6E8CF;
+  font-size: clamp(24px, 4vw, 64px);
+  margin: 1vh 0;
+}
+
+h2 {
+  color: #E8B96A;
+  font-size: clamp(18px, 2.4vw, 36px);
+  margin: 2vh 0 3vh;
+}
+
+.podium {
+  display: flex;
+  justify-content: center;
+  gap: 1.5vw;
+  width: 100%;
+}
+
+.medal {
+  flex: 1;
+  min-width: 0;
+  padding: 3vh 1vw;
+  border-radius: 12px;
+  color: #171717;
+  animation: appear .8s ease both;
+}
+
+.silver {
+  background: #C0C0C0;
+  animation-delay: .2s;
+}
+
+.gold {
+  background: #DAA520;
+  animation-delay: .4s;
+}
+
+.bronze {
+  background: #B87333;
+  animation-delay: .6s;
+}
+
+.place {
+  font-size: clamp(24px, 4vw, 64px);
+  font-weight: 900;
+}
+
+.name {
+  font-size: clamp(14px, 2vw, 30px);
+  font-weight: bold;
+  margin: 2vh 0;
+  overflow-wrap: anywhere;
+}
+
+.time {
+  font-size: clamp(14px, 1.8vw, 28px);
+  font-weight: bold;
+}
+
+#status {
+  color: #E8B96A;
+  font-size: clamp(12px, 1.2vw, 18px);
+  margin-top: 1vh;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SCROLLING TURKEY BANNERS */
+
+.ticker-zone {
+  position: absolute;
+  bottom: 3.4vh;
+  left: 0;
+  width: 100%;
+  height: min(30vh, 255px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1vh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ticker-row {
+  height: 31%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    #101827 0%,
+    #252017 8%,
+    #252017 92%,
+    #101827 100%
+  );
+  border-top: 1px solid #8d6d28;
+  border-bottom: 1px solid #8d6d28;
+  box-shadow: 0 2px 10px #0007;
+}
+
+.ticker-train {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: max-content;
+  white-space: nowrap;
+  animation: cross-left 22s linear infinite;
+  will-change: transform;
+}
+
+.ticker-row:nth-child(2) .ticker-train {
+  animation-name: cross-right;
+  animation-duration: 27s;
+}
+
+.ticker-row:nth-child(3) .ticker-train {
+  animation-duration: 32s;
+}
+
+.turkey {
+  height: 90%;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(2px 2px 3px #0009);
+}
+
+.ticker-text {
+  font-size: clamp(17px, 2.2vw, 34px);
+  font-weight: 900;
+  color: #f7ce4d;
+  letter-spacing: .02em;
+  text-shadow:
+    1px 2px 1px #000,
+    0 0 8px #ad752c;
+}
+
+.ticker-row:nth-child(2) .ticker-text {
+  color: #e9b74b;
+}
+
+.ticker-row:nth-child(3) .ticker-text {
+  color: #f6d46e;
+}
+
+@keyframes cross-left {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes cross-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
+}
+
+.brand {
+  position: absolute;
+  bottom: .65vh;
+  left: 0;
+  width: 100%;
+  font-size: clamp(10px, 1vw, 15px);
+  color: #d4b879;
+  font-weight: bold;
+  letter-spacing: .12em;
+}
+
+/* RESPONSIVE DISPLAY */
+
+@media (max-width: 600px) {
+  .awards { padding: 2vh 2vw; }
+  .podium { gap: 1vw; }
+  .medal { padding: 2vh 1vw; }
+  .ticker-zone { height: 25vh; }
+  .turkey { max-width: 60px; }
+}
+
+@media (max-height: 600px) {
+  .awards { padding-top: 1vh; }
+  h1 { margin: 0; }
+  h2 { margin: 1vh 0; }
+  .medal {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+  }
+  .name { margin: 1vh 0; }
+  .ticker-zone { height: 28vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-train { animation-duration: 70s; }
+  .medal { animation: none; }
+}
 </style>
 </head>
+
 <body>
+
 <div class="awards">
-  <div class="eyebrow">15TH ANNUAL • THANKSGIVING DAY</div>
+
+  <div class="eyebrow">
+    15TH ANNUAL • THANKSGIVING DAY
+  </div>
+
   <h1>BRANSON TURKEY TROT</h1>
+
   <h2 id="category">LOADING AWARDS...</h2>
+
   <div class="podium">
-    <div class="medal silver"><div class="place">2ND</div><div class="name" id="name2">---</div><div class="time" id="time2">---</div></div>
-    <div class="medal gold"><div class="place">1ST</div><div class="name" id="name1">---</div><div class="time" id="time1">---</div></div>
-    <div class="medal bronze"><div class="place">3RD</div><div class="name" id="name3">---</div><div class="time" id="time3">---</div></div>
+
+    <div class="medal silver">
+      <div class="place">2ND</div>
+      <div class="name" id="name2">---</div>
+      <div class="time" id="time2">---</div>
+    </div>
+
+    <div class="medal gold">
+      <div class="place">1ST</div>
+      <div class="name" id="name1">---</div>
+      <div class="time" id="time1">---</div>
+    </div>
+
+    <div class="medal bronze">
+      <div class="place">3RD</div>
+      <div class="name" id="name3">---</div>
+      <div class="time" id="time3">---</div>
+    </div>
+
   </div>
+
   <div id="status"></div>
-  <div class="ticker-zone" aria-label="Scrolling age-group banners">
-    <div class="ticker-row"><div class="ticker-train"><img class="turkey" src="branson_turkey_transparent.png" alt=""><div class="ticker-text" id="ticker0">TOP 3 • BRANSON TURKEY TROT • TOP 3 • BRANSON TURKEY TROT •</div></div></div>
-    <div class="ticker-row"><div class="ticker-train"><img class="turkey" src="branson_turkey_transparent.png" alt=""><div class="ticker-text" id="ticker1">TOP 3 • BRANSON TURKEY TROT • TOP 3 • BRANSON TURKEY TROT •</div></div></div>
-    <div class="ticker-row"><div class="ticker-train"><img class="turkey" src="branson_turkey_transparent.png" alt=""><div class="ticker-text" id="ticker2">TOP 3 • BRANSON TURKEY TROT • TOP 3 • BRANSON TURKEY TROT •</div></div></div>
+
+  <!-- THREE ANIMATED TURKEY BANNERS -->
+
+  <div class="ticker-zone"
+       aria-label="Scrolling award category banners">
+
+    <div class="ticker-row">
+      <div class="ticker-train">
+        <img class="turkey"
+             src="branson_turkey_transparent.png"
+             alt="">
+        <div class="ticker-text" id="ticker0">
+          TOP 3 • BRANSON TURKEY TROT •
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker-row">
+      <div class="ticker-train">
+        <img class="turkey"
+             src="branson_turkey_transparent.png"
+             alt="">
+        <div class="ticker-text" id="ticker1">
+          TOP 3 • BRANSON TURKEY TROT •
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker-row">
+      <div class="ticker-train">
+        <img class="turkey"
+             src="branson_turkey_transparent.png"
+             alt="">
+        <div class="ticker-text" id="ticker2">
+          TOP 3 • BRANSON TURKEY TROT •
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="brand">ACTNOWRACING.COM • LIVE RACE RESULTS</div>
+
+  <div class="brand">
+    ACTNOWRACING.COM • LIVE RACE RESULTS
+  </div>
+
 </div>
+
 <script>
-// Keep the existing working RACE RESULT connection.
-const apiURL="https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
-let categories=[];
-let currentIndex=0;
-function formatTime(value){if(!value)return "---";return String(value).replace(/^0:/,"").replace(/\.00$/,"")}
-function getPlace(runner){const formulaKey=Object.keys(runner).find(key=>key.startsWith("switch("));if(!formulaKey)return null;const place=Number(runner[formulaKey]);return Number.isInteger(place)&&place>=1&&place<=3?place:null}
-function buildCategories(data){const groups=new Map();data.forEach(runner=>{const award=runner["Award Category"];const gender=runner.Gender;const place=getPlace(runner);if(!award||!gender||!place)return;const isOverall=award==="#Overall";const title=isOverall?gender.toUpperCase()+" OVERALL WINNERS":award.toUpperCase();const key=(isOverall?"Overall":award)+"|"+gender;if(!groups.has(key))groups.set(key,{title,runners:{},isOverall});groups.get(key).runners[place]=runner});return Array.from(groups.values())}
-function updateTickers(){const ageGroups=categories.filter(group=>!group.isOverall);for(let i=0;i<3;i++){const group=ageGroups.length?ageGroups[(currentIndex+i)%ageGroups.length]:null;const label=group?group.title:"BRANSON TURKEY TROT";document.getElementById("ticker"+i).textContent=Array(5).fill("TOP 3 • "+label+" •").join(" ")}}
-function showCategory(){if(!categories.length)return;if(currentIndex>=categories.length)currentIndex=0;const group=categories[currentIndex];document.getElementById("category").textContent=group.title;for(let place=1;place<=3;place++){const runner=group.runners[place];document.getElementById("name"+place).textContent=runner?runner.FirstLastname:"---";document.getElementById("time"+place).textContent=runner?formatTime(runner.Time):"---"}document.querySelectorAll(".medal").forEach(card=>{card.style.animation="none";void card.offsetWidth;card.style.animation=""});updateTickers()}
-async function loadResults(){try{const response=await fetch(apiURL,{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const data=await response.json();if(!Array.isArray(data))throw new Error("Unexpected JSON format");const updated=buildCategories(data);if(!updated.length)throw new Error("No award categories found");const currentTitle=categories[currentIndex]?.title;categories=updated;const matchingIndex=categories.findIndex(category=>category.title===currentTitle);currentIndex=matchingIndex>=0?matchingIndex:0;showCategory();document.getElementById("status").textContent=""}catch(error){document.getElementById("status").textContent="Waiting for updated race results...";console.error("Awards update failed:",error)}}
-loadResults();setInterval(()=>{if(!categories.length)return;currentIndex=(currentIndex+1)%categories.length;showCategory()},10000);setInterval(loadResults,30000);
+
+/* LIVE RACE RESULT CONNECTION */
+
+const apiURL =
+  "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
+
+let categories = [];
+let currentIndex = 0;
+
+/* FORMAT FINISH TIMES */
+
+function formatTime(value) {
+  if (!value) return "---";
+
+  return String(value)
+    .replace(/^0:/, "")
+    .replace(/\.00$/, "");
+}
+
+/* FIND WINNER PLACEMENT */
+
+function getPlace(runner) {
+  const formulaKey = Object.keys(runner)
+    .find(key => key.startsWith("switch("));
+
+  if (!formulaKey) return null;
+
+  const place = Number(runner[formulaKey]);
+
+  return Number.isInteger(place) &&
+    place >= 1 &&
+    place <= 3
+    ? place
+    : null;
+}
+
+/* BUILD OVERALL AND AGE GROUP CATEGORIES */
+
+function buildCategories(data) {
+  const groups = new Map();
+
+  data.forEach(runner => {
+    const award = runner["Award Category"];
+    const gender = runner.Gender;
+    const place = getPlace(runner);
+
+    if (!award || !gender || !place) return;
+
+    const isOverall = award === "#Overall";
+
+    const title = isOverall
+      ? gender.toUpperCase() + " OVERALL WINNERS"
+      : award.toUpperCase();
+
+    const key = (isOverall ? "Overall" : award)
+      + "|" + gender;
+
+    if (!groups.has(key)) {
+      groups.set(key, {
+        title,
+        runners: {},
+        isOverall
+      });
+    }
+
+    groups.get(key).runners[place] = runner;
+  });
+
+  return Array.from(groups.values());
+}
+
+/* MAKE ALL THREE BANNERS MATCH THE PODIUM */
+
+function updateTickers() {
+  const group = categories[currentIndex];
+
+  const label = group
+    ? group.title
+    : "BRANSON TURKEY TROT";
+
+  for (let i = 0; i < 3; i++) {
+    document.getElementById("ticker" + i).textContent =
+      Array(5)
+        .fill("TOP 3 • " + label + " •")
+        .join(" ");
+  }
+}
+
+/* DISPLAY CURRENT AWARD CATEGORY */
+
+function showCategory() {
+  if (!categories.length) return;
+
+  if (currentIndex >= categories.length) {
+    currentIndex = 0;
+  }
+
+  const group = categories[currentIndex];
+
+  document.getElementById("category").textContent =
+    group.title;
+
+  for (let place = 1; place <= 3; place++) {
+    const runner = group.runners[place];
+
+    document.getElementById("name" + place).textContent =
+      runner ? runner.FirstLastname : "---";
+
+    document.getElementById("time" + place).textContent =
+      runner ? formatTime(runner.Time) : "---";
+  }
+
+  /* RESTART PODIUM ENTRY ANIMATION */
+
+  document.querySelectorAll(".medal").forEach(card => {
+    card.style.animation = "none";
+    void card.offsetWidth;
+    card.style.animation = "";
+  });
+
+  updateTickers();
+}
+
+/* FETCH LIVE RESULTS EVERY 30 SECONDS */
+
+async function loadResults() {
+  try {
+    const response = await fetch(apiURL, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("Unexpected JSON format");
+    }
+
+    const updated = buildCategories(data);
+
+    if (!updated.length) {
+      throw new Error("No award categories found");
+    }
+
+    const currentTitle =
+      categories[currentIndex]?.title;
+
+    categories = updated;
+
+    const matchingIndex = categories.findIndex(
+      category => category.title === currentTitle
+    );
+
+    currentIndex = matchingIndex >= 0
+      ? matchingIndex
+      : 0;
+
+    showCategory();
+
+    document.getElementById("status").textContent = "";
+
+  } catch (error) {
+    document.getElementById("status").textContent =
+      "Waiting for updated race results...";
+
+    console.error("Awards update failed:", error);
+  }
+}
+
+/* START LIVE DISPLAY */
+
+loadResults();
+
+/* ROTATE AWARDS EVERY 10 SECONDS */
+
+setInterval(() => {
+  if (!categories.length) return;
+
+  currentIndex = (currentIndex + 1) % categories.length;
+
+  showCategory();
+}, 10000);
+
+/* REFRESH RESULTS EVERY 30 SECONDS */
+
+setInterval(loadResults, 30000);
+
 </script>
+
 </body>
 </html>
