@@ -1,522 +1,158 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Branson Turkey Trot | Live Animated Awards</title>
 <style>
+:root{--navy:#101827;--gold:#e0a91f;--cream:#f6e8cf;--orange:#ffb457;--ticker:#241f17}
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#101827;
-  font-family:Arial,sans-serif;
-}
-.awards{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-  color:white;
-  text-align:center;
-  padding:2vh 2vw;
-}
-.eyebrow{
-  color:#e8b96a;
-  font-size:clamp(11px,1.3vw,20px);
-  font-weight:800;
-}
-h1{
-  color:#f6e8cf;
-  font-size:clamp(25px,4vw,64px);
-  margin:1vh 0;
-  text-shadow:0 3px 12px #0005;
-}
-h2{
-  color:#ffbd63;
-  font-size:clamp(19px,2.4vw,37px);
-  margin:1.5vh 0 3vh;
-}
-.podium{
-  display:flex;
-  justify-content:center;
-  gap:1.5vw;
-  width:100%;
-}
-.medal{
-  position:relative;
-  flex:1;
-  min-width:0;
-  overflow:hidden;
-  padding:2.5vh 1vw;
-  border-radius:12px;
-  color:#171717;
-  box-shadow:0 8px 20px #0004;
-  animation:rise .8s ease both;
-}
-.silver{
-  background:#c0c0c0;
-  animation-delay:.18s;
-}
-.gold{
-  background:#daa520;
-  animation-delay:.36s;
-}
-.bronze{
-  background:#b87333;
-  animation-delay:.54s;
-}
-.gold:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    110deg,
-    transparent 25%,
-    #fff7 45%,
-    transparent 60%
-  );
-  transform:translateX(-180%);
-  animation:shimmer 7s ease-in-out infinite 2s;
-  pointer-events:none;
-}
-.place{
-  font-size:clamp(27px,4.2vw,67px);
-  font-weight:900;
-}
-.name{
-  font-size:clamp(14px,2vw,30px);
-  font-weight:800;
-  margin:1.6vh 0;
-  overflow-wrap:anywhere;
-}
-.time{
-  font-size:clamp(14px,1.8vw,28px);
-  font-weight:800;
-}
-@keyframes rise{
-  from{
-    opacity:0;
-    transform:translateY(35px) scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-@keyframes shimmer{
-  0%,55%,100%{transform:translateX(-180%)}
-  75%{transform:translateX(180%)}
-}
-#status{
-  color:#e8b96a;
-  font-size:clamp(12px,1.2vw,18px);
-  margin-top:1vh;
-}
-
-/* Ten-second award countdown */
-.countdown{
-  position:absolute;
-  left:0;
-  bottom:0;
-  width:100%;
-  height:4px;
-  background:#ffffff22;
-}
-.countdown-fill{
-  height:100%;
-  width:100%;
-  background:linear-gradient(
-    90deg,#b87333,#ffcf57,#f6e8cf
-  );
-  transform-origin:left;
-  animation:countdown 10s linear infinite;
-}
-@keyframes countdown{
-  from{transform:scaleX(1)}
-  to{transform:scaleX(0)}
-}
-
-/* Three continuous scrolling turkey banners */
-.ticker-zone{
-  position:absolute;
-  bottom:3.5vh;
-  left:0;
-  width:100%;
-  height:min(30vh,255px);
-  display:flex;
-  flex-direction:column;
-  gap:1vh;
-  pointer-events:none;
-  overflow:hidden;
-}
-.ticker-row{
-  position:relative;
-  flex:1;
-  min-height:0;
-  overflow:hidden;
-  background:linear-gradient(
-    90deg,
-    #191b20,
-    #292117 20%,
-    #292117 80%,
-    #191b20
-  );
-  border-top:1px solid #a47a29;
-  border-bottom:1px solid #a47a29;
-  box-shadow:0 2px 10px #0007;
-}
-.ticker-track{
-  position:absolute;
-  top:0;
-  left:0;
-  height:100%;
-  width:max-content;
-  display:flex;
-  align-items:center;
-  animation:marquee 90s linear infinite;
-  will-change:transform;
-}
-.ticker-row:nth-child(2) .ticker-track{
-  animation-duration:105s;
-  animation-direction:reverse;
-}
-.ticker-row:nth-child(3) .ticker-track{
-  animation-duration:120s;
-}
-.ticker-set{
-  display:flex;
-  align-items:center;
-  flex:none;
-  white-space:nowrap;
-}
-.ticker-unit{
-  display:inline-flex;
-  align-items:center;
-  gap:1.1vw;
-  padding-right:2.4vw;
-  flex:none;
-}
-.turkey{
-  height:clamp(30px,6vh,67px);
-  max-width:80px;
-  width:auto;
-  object-fit:contain;
-  filter:drop-shadow(2px 2px 3px #0009);
-}
-.ticker-text{
-  font-size:clamp(17px,2.15vw,34px);
-  font-weight:900;
-  color:#f7ce4d;
-  letter-spacing:.02em;
-  text-shadow:
-    1px 2px 1px #000,
-    0 0 8px #ad752c;
-}
-.ticker-row:nth-child(2) .ticker-text{
-  color:#e9b74b;
-}
-.ticker-row:nth-child(3) .ticker-text{
-  color:#f6d46e;
-}
-@keyframes marquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-.brand{
-  position:absolute;
-  bottom:.8vh;
-  left:0;
-  width:100%;
-  font-size:clamp(10px,1vw,15px);
-  color:#d4b879;
-  font-weight:bold;
-  letter-spacing:.12em;
-}
-@media(max-width:600px){
-  .awards{padding:2vh 1vw}
-  .podium{gap:1vw}
-  .medal{padding:2vh .7vw}
-  .ticker-zone{height:25vh}
-  .ticker-unit{gap:8px;padding-right:16px}
-}
-@media(max-height:600px){
-  .awards{padding-top:1vh}
-  h1{margin:0}
-  h2{margin:1vh 0}
-  .medal{
-    padding-top:1vh;
-    padding-bottom:1vh;
-  }
-  .name{margin:1vh 0}
-  .ticker-zone{height:28vh}
-}
-@media(prefers-reduced-motion:reduce){
-  .ticker-track{animation-duration:180s}
-  .medal{animation:none}
-  .gold:after{animation:none}
-}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--navy);font-family:Arial,Helvetica,sans-serif}
+.awards{height:100dvh;width:100%;position:relative;isolation:isolate;overflow:hidden;color:white;text-align:center;padding:clamp(8px,2vh,24px) 2vw 0;background:radial-gradient(ellipse at 50% 12%,#1b283b 0%,#101827 62%)}
+.sparkles{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.sparkles i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#ffd88a;opacity:0;box-shadow:0 0 12px #ffc45e;animation:twinkle var(--d) ease-in-out infinite;animation-delay:var(--delay)}
+@keyframes twinkle{0%,100%{opacity:0;transform:translateY(8px) scale(.5)}45%{opacity:.5;transform:translateY(-12px) scale(1)}}
+.leaves{position:absolute;top:2vh;font-size:clamp(25px,3.5vw,54px);opacity:.28;pointer-events:none;filter:drop-shadow(0 3px 2px #0008)}
+.leaves.left{left:2vw;transform:rotate(-22deg)}.leaves.right{right:2vw;transform:scaleX(-1) rotate(-22deg)}
+.eyebrow{color:var(--orange);font-size:clamp(11px,1.3vw,19px);font-weight:800;letter-spacing:.03em}
+h1{font-size:clamp(25px,4vw,64px);line-height:1.05;color:var(--cream);margin:.6vh 0 1.3vh;font-weight:900;letter-spacing:.01em;text-shadow:0 3px 8px #0005}
+.category-wrap{min-height:clamp(45px,7vh,75px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(3px,.7vh,9px)}
+h2{font-size:clamp(18px,2.45vw,36px);color:var(--orange);margin:0;line-height:1.15}
+.accent{width:min(24vw,280px);height:3px;border-radius:100px;background:linear-gradient(90deg,transparent,#e3ae3c,transparent)}
+.category-enter{animation:categoryIn .65s ease both}@keyframes categoryIn{from{opacity:0;transform:translateX(-25px)}to{opacity:1;transform:translateX(0)}}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:1.5vw;width:100%;margin-top:clamp(5px,1.5vh,20px)}
+.medal{flex:1;min-width:0;position:relative;border-radius:clamp(8px,1vw,16px);color:#171717;min-height:clamp(138px,27vh,265px);padding:clamp(12px,2.4vh,28px) 1vw;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 9px 22px #0004,inset 0 1px 0 #fff6;overflow:hidden;animation:podiumIn .75s ease both}
+.medal:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:#ffffff66}
+.medal.silver{background:linear-gradient(140deg,#e0e0e0,#bcbcbc 70%);animation-delay:.16s}
+.medal.gold{background:linear-gradient(140deg,#f6c543,#dda318 72%);min-height:clamp(154px,30vh,290px);animation-delay:.32s;box-shadow:0 10px 30px #dca52c30,0 9px 22px #0005,inset 0 1px 0 #fff9}
+.medal.bronze{background:linear-gradient(140deg,#ce8d4c,#ad6a32 75%);animation-delay:.48s}
+@keyframes podiumIn{from{opacity:0;transform:translateY(32px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.medal-icon{font-size:clamp(17px,2vw,30px);line-height:1;margin-bottom:clamp(3px,.5vh,7px);filter:drop-shadow(0 1px 1px #0005)}
+.place{font-size:clamp(27px,4vw,62px);line-height:1;font-weight:900}
+.name{font-size:clamp(15px,2.1vw,31px);font-weight:800;margin:clamp(8px,1.6vh,19px) 0 clamp(4px,.8vh,10px);overflow-wrap:anywhere;line-height:1.12}
+.time{font-size:clamp(14px,1.8vw,27px);font-weight:800;font-variant-numeric:tabular-nums}
+#status{font-size:clamp(11px,1vw,16px);color:#f5c579;margin-top:1vh}
+.ticker-zone{position:absolute;left:0;right:0;bottom:clamp(24px,3.6vh,45px);height:clamp(126px,29vh,270px);display:flex;flex-direction:column;gap:clamp(4px,.8vh,10px);overflow:hidden;pointer-events:none}
+.ticker-row{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(90deg,#171b24,#282016 10%,#282016 90%,#171b24);border-top:1px solid #a0792a;border-bottom:1px solid #a0792a;box-shadow:0 2px 9px #0007}
+.ticker-track{position:absolute;left:0;top:0;height:100%;display:flex;align-items:center;width:max-content;animation:marquee 55s linear infinite;will-change:transform}
+.ticker-row:nth-child(2) .ticker-track{animation-duration:66s;animation-direction:reverse}
+.ticker-row:nth-child(3) .ticker-track{animation-duration:77s}
+.ticker-unit{display:flex;align-items:center;gap:clamp(8px,1vw,18px);flex-shrink:0;padding-right:clamp(10px,1.5vw,24px)}
+.turkey{height:clamp(30px,7vh,65px);max-width:clamp(35px,6vw,80px);width:auto;object-fit:contain;filter:drop-shadow(2px 2px 2px #000a)}
+.ticker-text{font-size:clamp(16px,2.2vw,34px);font-weight:900;white-space:nowrap;letter-spacing:.01em;color:#f7ce4d;text-shadow:1px 2px 1px #000,0 0 7px #c78c3e}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.brand{position:absolute;bottom:0;left:0;right:0;height:clamp(24px,3.6vh,45px);display:flex;align-items:center;justify-content:center;background:#0a111e;border-top:1px solid #9b762c;font-size:clamp(11px,1.1vw,17px);font-weight:800;letter-spacing:.1em;color:#e6c77d}
+@media(max-height:680px){.awards{padding-top:1vh}.podium{margin-top:.5vh}.medal{min-height:23vh;padding:1vh 1vw}.medal.gold{min-height:26vh}.name{margin:.8vh 0}.ticker-zone{height:27vh}}
+@media(max-width:650px){.awards{padding-left:1vw;padding-right:1vw}.podium{gap:1vw}.medal{padding:1vh .5vw}.medal-icon{font-size:17px}.name{font-size:clamp(12px,2.7vw,18px)}.place{font-size:clamp(23px,5vw,36px)}.time{font-size:clamp(12px,2.4vw,17px)}.ticker-zone{height:25vh}.leaves{opacity:.16}}
+@media(prefers-reduced-motion:reduce){.sparkles i{animation:none}.medal,.category-enter{animation:none}.ticker-track{animation-duration:110s!important}}
 </style>
 </head>
 <body>
-<div class="awards">
-  <div class="eyebrow">
-    15TH ANNUAL • THANKSGIVING DAY
-  </div>
-
+<main class="awards">
+  <div class="sparkles" aria-hidden="true" id="sparkles"></div>
+  <div class="leaves left" aria-hidden="true">🍁 🍂</div><div class="leaves right" aria-hidden="true">🍁 🍂</div>
+  <div class="eyebrow">15TH ANNUAL • THANKSGIVING DAY</div>
   <h1>BRANSON TURKEY TROT</h1>
-  <h2 id="category">LOADING AWARDS...</h2>
-
+  <div class="category-wrap"><h2 id="category">LOADING AWARDS...</h2><div class="accent"></div></div>
   <div class="podium">
-    <div class="medal silver">
-      <div class="place">2ND</div>
-      <div class="name" id="name2">---</div>
-      <div class="time" id="time2">---</div>
-    </div>
-
-    <div class="medal gold">
-      <div class="place">1ST</div>
-      <div class="name" id="name1">---</div>
-      <div class="time" id="time1">---</div>
-    </div>
-
-    <div class="medal bronze">
-      <div class="place">3RD</div>
-      <div class="name" id="name3">---</div>
-      <div class="time" id="time3">---</div>
-    </div>
+    <section class="medal silver"><div class="medal-icon" aria-hidden="true">🥈</div><div class="place">2ND</div><div class="name" id="name2">---</div><div class="time" id="time2">---</div></section>
+    <section class="medal gold"><div class="medal-icon" aria-hidden="true">🏆</div><div class="place">1ST</div><div class="name" id="name1">---</div><div class="time" id="time1">---</div></section>
+    <section class="medal bronze"><div class="medal-icon" aria-hidden="true">🥉</div><div class="place">3RD</div><div class="name" id="name3">---</div><div class="time" id="time3">---</div></section>
   </div>
-
-  <div id="status"></div>
-
-  <div class="ticker-zone"
-       aria-label="Continuous scrolling award banners">
-    <div class="ticker-row">
-      <div class="ticker-track" id="track0"></div>
-    </div>
-    <div class="ticker-row">
-      <div class="ticker-track" id="track1"></div>
-    </div>
-    <div class="ticker-row">
-      <div class="ticker-track" id="track2"></div>
-    </div>
+  <div id="status" role="status"></div>
+  <div class="ticker-zone" aria-label="Scrolling banners for current award category">
+    <div class="ticker-row"><div class="ticker-track" id="ticker0"></div></div>
+    <div class="ticker-row"><div class="ticker-track" id="ticker1"></div></div>
+    <div class="ticker-row"><div class="ticker-track" id="ticker2"></div></div>
   </div>
-
-  <div class="brand">
-    ACTNOWRACING.COM • LIVE RACE RESULTS
-  </div>
-
-  <div class="countdown">
-    <div class="countdown-fill" id="countdownFill"></div>
-  </div>
-</div>
-
+  <footer class="brand">ACTNOWRACING.COM • LIVE RACE RESULTS</footer>
+</main>
 <script>
-const apiURL =
-  "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
-
-const turkeyImage = "branson_turkey_transparent.png";
-
-let categories = [];
-let currentIndex = 0;
-let lastTickerTitle = "";
-
-function formatTime(value) {
-  if (!value) return "---";
-  return String(value)
-    .replace(/^0:/, "")
-    .replace(/\.00$/, "");
+// RACE RESULT Simple API URL: retain the same live connection.
+const apiURL="https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
+const turkeyFile="branson_turkey_transparent.png";
+let categories=[];
+let currentIndex=0;
+let firstLoad=true;
+const $=id=>document.getElementById(id);
+function formatTime(value){if(!value)return "---";return String(value).replace(/^0:/,"").replace(/\.00$/,"")}
+function getPlace(runner){const formulaKey=Object.keys(runner).find(key=>key.startsWith("switch("));if(!formulaKey)return null;const place=Number(runner[formulaKey]);return Number.isInteger(place)&&place>=1&&place<=3?place:null}
+function buildCategories(data){
+ const groups=new Map();
+ data.forEach(runner=>{
+  const award=runner["Award Category"],gender=runner.Gender,place=getPlace(runner);
+  if(!award||!gender||!place)return;
+  const isOverall=award==="#Overall";
+  const title=isOverall?gender.toUpperCase()+" OVERALL WINNERS":award.toUpperCase();
+  const key=(isOverall?"Overall":award)+"|"+gender;
+  if(!groups.has(key))groups.set(key,{title,runners:{},isOverall});
+  groups.get(key).runners[place]=runner;
+ });
+ return Array.from(groups.values());
 }
-
-function getPlace(runner) {
-  const formulaKey = Object.keys(runner)
-    .find(key => key.startsWith("switch("));
-
-  if (!formulaKey) return null;
-
-  const place = Number(runner[formulaKey]);
-
-  return Number.isInteger(place) &&
-         place >= 1 &&
-         place <= 3
-    ? place
-    : null;
+// Two identical sets of repeated turkey-and-text units form a seamless loop.
+function updateTickers(title){
+ for(let row=0;row<3;row++){
+  const track=$("ticker"+row);
+  const unit=document.createElement("div");unit.className="ticker-unit";
+  const turkey=document.createElement("img");turkey.className="turkey";turkey.src=turkeyFile;turkey.alt="";
+  const label=document.createElement("span");label.className="ticker-text";label.textContent="TOP 3 • "+title+" •";
+  unit.append(turkey,label);
+  // Build enough repeated units to cover wide monitors before duplicating.
+  const group=document.createElement("div");group.style.display="flex";group.style.alignItems="center";group.style.flexShrink="0";
+  for(let i=0;i<12;i++)group.appendChild(unit.cloneNode(true));
+  const duplicate=group.cloneNode(true);
+  track.replaceChildren(group,duplicate);
+  // Restart at a stable seam when the category changes.
+  track.style.animation="none";void track.offsetWidth;track.style.animation="";
+ }
 }
-
-function buildCategories(data) {
-  const groups = new Map();
-
-  data.forEach(runner => {
-    const award = runner["Award Category"];
-    const gender = runner.Gender;
-    const place = getPlace(runner);
-
-    if (!award || !gender || !place) return;
-
-    const isOverall = award === "#Overall";
-
-    const title = isOverall
-      ? gender.toUpperCase() + " OVERALL WINNERS"
-      : award.toUpperCase();
-
-    const key = (isOverall ? "Overall" : award) +
-                "|" + gender;
-
-    if (!groups.has(key)) {
-      groups.set(key, {
-        title,
-        runners: {},
-        isOverall
-      });
-    }
-
-    groups.get(key).runners[place] = runner;
-  });
-
-  return Array.from(groups.values());
+function showCategory(){
+ if(!categories.length)return;
+ currentIndex%=categories.length;
+ const group=categories[currentIndex];
+ const heading=$("category");heading.textContent=group.title;
+ heading.classList.remove("category-enter");void heading.offsetWidth;heading.classList.add("category-enter");
+ for(let place=1;place<=3;place++){
+  const runner=group.runners[place];
+  $("name"+place).textContent=runner?runner.FirstLastname:"---";
+  $("time"+place).textContent=runner?formatTime(runner.Time):"---";
+ }
+ document.querySelectorAll(".medal").forEach(card=>{card.style.animation="none";void card.offsetWidth;card.style.animation=""});
+ updateTickers(group.title);
 }
-
-function makeTickerUnit(label) {
-  const unit = document.createElement("span");
-  unit.className = "ticker-unit";
-
-  const img = document.createElement("img");
-  img.className = "turkey";
-  img.src = turkeyImage;
-  img.alt = "";
-
-  const text = document.createElement("span");
-  text.className = "ticker-text";
-  text.textContent = "TOP 3 • " + label + " •";
-
-  unit.append(img, text);
-
-  return unit;
+async function loadResults(){
+ try{
+  const response=await fetch(apiURL,{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();
+  if(!Array.isArray(data))throw new Error("Unexpected JSON format");
+  const updated=buildCategories(data);
+  if(!updated.length)throw new Error("No award categories found");
+  const currentTitle=categories[currentIndex]?.title;
+  categories=updated;
+  const matchingIndex=categories.findIndex(group=>group.title===currentTitle);
+  currentIndex=matchingIndex>=0?matchingIndex:0;
+  // Refresh podium when live data changes, without interrupting the category order.
+  showCategory();firstLoad=false;$("status").textContent="";
+ }catch(error){
+  $("status").textContent=categories.length?"Waiting for updated results...":"Connecting to live race results...";
+  console.error("Awards update failed:",error);
+ }
 }
-
-function updateTickers(title) {
-  if (title === lastTickerTitle) return;
-
-  lastTickerTitle = title;
-
-  for (let i = 0; i < 3; i++) {
-    const track = document.getElementById("track" + i);
-    track.replaceChildren();
-
-    const set = document.createElement("div");
-    set.className = "ticker-set";
-
-    for (let j = 0; j < 12; j++) {
-      set.appendChild(makeTickerUnit(title));
-    }
-
-    track.appendChild(set);
-    track.appendChild(set.cloneNode(true));
-
-    track.style.animation = "none";
-    void track.offsetWidth;
-    track.style.animation = "";
-  }
+// Decorative gold lights, deterministic and deliberately subtle.
+for(let i=0;i<22;i++){
+ const dot=document.createElement("i");
+ dot.style.setProperty("--x",((i*43+11)%97)+"%");
+ dot.style.setProperty("--y",((i*31+7)%66)+"%");
+ dot.style.setProperty("--s",(2+i%3)+"px");
+ dot.style.setProperty("--d",(5+i%4)+"s");
+ dot.style.setProperty("--delay",(-i*.65)+"s");
+ $("sparkles").appendChild(dot);
 }
-
-function showCategory() {
-  if (!categories.length) return;
-
-  if (currentIndex >= categories.length) {
-    currentIndex = 0;
-  }
-
-  const group = categories[currentIndex];
-
-  document.getElementById("category").textContent =
-    group.title;
-
-  for (let place = 1; place <= 3; place++) {
-    const runner = group.runners[place];
-
-    document.getElementById("name" + place).textContent =
-      runner ? runner.FirstLastname : "---";
-
-    document.getElementById("time" + place).textContent =
-      runner ? formatTime(runner.Time) : "---";
-  }
-
-  document.querySelectorAll(".medal").forEach(card => {
-    card.style.animation = "none";
-    void card.offsetWidth;
-    card.style.animation = "";
-  });
-
-  updateTickers(group.title);
-
-  const bar = document.getElementById("countdownFill");
-  bar.style.animation = "none";
-  void bar.offsetWidth;
-  bar.style.animation = "";
-}
-
-async function loadResults() {
-  try {
-    const response = await fetch(apiURL, {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status);
-    }
-
-    const data = await response.json();
-
-    if (!Array.isArray(data)) {
-      throw new Error("Unexpected JSON format");
-    }
-
-    const updated = buildCategories(data);
-
-    if (!updated.length) {
-      throw new Error("No award categories found");
-    }
-
-    const currentTitle =
-      categories[currentIndex]?.title;
-
-    categories = updated;
-
-    const matchingIndex = categories.findIndex(
-      category => category.title === currentTitle
-    );
-
-    currentIndex = matchingIndex >= 0
-      ? matchingIndex
-      : 0;
-
-    showCategory();
-
-    document.getElementById("status").textContent = "";
-
-  } catch (error) {
-    document.getElementById("status").textContent =
-      "Waiting for updated race results...";
-
-    console.error("Awards update failed:", error);
-  }
-}
-
 loadResults();
-
-setInterval(() => {
-  if (!categories.length) return;
-
-  currentIndex =
-    (currentIndex + 1) % categories.length;
-
-  showCategory();
-}, 10000);
-
-setInterval(loadResults, 30000);
+setInterval(()=>{if(categories.length){currentIndex=(currentIndex+1)%categories.length;showCategory()}},10000);
+setInterval(loadResults,30000);
 </script>
 </body>
 </html>
