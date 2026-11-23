@@ -2,63 +2,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ActNowRacing Awards Test</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      background: #101827;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    h1 { color: #E8B96A; }
-    #status { font-size: 24px; margin: 30px 0; }
-    #results { font-size: 20px; line-height: 1.8; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branson Turkey Trot - Live Awards</title>
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #101827;
+  font-family: Arial, sans-serif;
+}
+
+.awards {
+  width: 100%;
+  height: 100vh;
+  padding: 3vh 3vw;
+  color: #fff;
+  text-align: center;
+}
+
+.eyebrow {
+  color: #E8B96A;
+  font-size: clamp(11px, 1.3vw, 20px);
+  font-weight: bold;
+}
+
+h1 {
+  color: #F6E8CF;
+  font-size: clamp(24px, 4vw, 64px);
+  margin: 1vh 0;
+}
+
+h2 {
+  color: #E8B96A;
+  font-size: clamp(18px, 2.4vw, 36px);
+  margin: 2vh 0 3vh;
+}
+
+.podium {
+  display: flex;
+  justify-content: center;
+  gap: 1.5vw;
+  width: 100%;
+}
+
+.medal {
+  flex: 1;
+  min-width: 0;
+  padding: 3vh 1vw;
+  border-radius: 12px;
+  color: #171717;
+  animation: appear .8s ease both;
+}
+
+.silver {
+  background: #C0C0C0;
+  animation-delay: .2s;
+}
+
+.gold {
+  background: #DAA520;
+  animation-delay: .4s;
+}
+
+.bronze {
+  background: #B87333;
+  animation-delay: .6s;
+}
+
+.place {
+  font-size: clamp(24px, 4vw, 64px);
+  font-weight: 900;
+}
+
+.name {
+  font-size: clamp(14px, 2vw, 30px);
+  font-weight: bold;
+  margin: 2vh 0;
+  overflow-wrap: anywhere;
+}
+
+.time {
+  font-size: clamp(14px, 1.8vw, 28px);
+  font-weight: bold;
+}
+
+#status {
+  color: #E8B96A;
+  font-size: 18px;
+  margin-top: 3vh;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .awards { padding: 2vh 2vw; }
+  .podium { gap: 1vw; }
+  .medal { padding: 2vh 1vw; }
+}
+
+@media (max-height: 600px) {
+  .awards { padding-top: 1vh; }
+  h1 { margin: 0; }
+  h2 { margin: 1vh 0; }
+  .medal { padding-top: 1vh; padding-bottom: 1vh; }
+  .name { margin: 1vh 0; }
+}
+</style>
 </head>
+
 <body>
+
+<div class="awards">
+  <div class="eyebrow">15TH ANNUAL • THANKSGIVING DAY</div>
   <h1>BRANSON TURKEY TROT</h1>
-  <h2>LIVE RESULTS CONNECTION TEST</h2>
-  <div id="status">Checking connection...</div>
-  <div id="results"></div>
+  <h2 id="category">LOADING OVERALL WINNERS...</h2>
 
-  <script>
-    const apiURL =
-      "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
+  <div class="podium">
+    <div class="medal silver">
+      <div class="place">2ND</div>
+      <div class="name" id="name2">---</div>
+      <div class="time" id="time2">---</div>
+    </div>
 
-    async function checkConnection() {
-      const status = document.getElementById("status");
-      const results = document.getElementById("results");
+    <div class="medal gold">
+      <div class="place">1ST</div>
+      <div class="name" id="name1">---</div>
+      <div class="time" id="time1">---</div>
+    </div>
 
-      try {
-        const response = await fetch(apiURL, { cache: "no-store" });
-        if (!response.ok) throw new Error("HTTP " + response.status);
+    <div class="medal bronze">
+      <div class="place">3RD</div>
+      <div class="name" id="name3">---</div>
+      <div class="time" id="time3">---</div>
+    </div>
+  </div>
 
-        const data = await response.json();
-        if (!Array.isArray(data)) {
-          throw new Error("Unexpected data format");
-        }
+  <div id="status"></div>
+</div>
 
-        status.textContent = "SUCCESS! Live results connected.";
-        status.style.color = "#6EEB83";
+<script>
+const apiURL =
+  "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
 
-        results.replaceChildren();
-        data.slice(0, 6).forEach(runner => {
-          const row = document.createElement("div");
-          row.textContent = runner.FirstLastname + " — " + runner.Time;
-          results.appendChild(row);
-        });
-      } catch (error) {
-        status.textContent = "CONNECTION FAILED";
-        status.style.color = "#FF7777";
-        results.textContent = error.message;
-      }
-    }
+let winners = [];
+let currentCategory = 0;
 
-    checkConnection();
-  </script>
+function formatTime(value) {
+  if (!value) return "---";
+  return value.replace(/^0:/, "").replace(/\.00$/, "");
+}
+
+function showCategory() {
+  if (winners.length < 6) return;
+
+  const isFemale = currentCategory === 0;
+  const group = isFemale
+    ? winners.slice(0, 3)
+    : winners.slice(3, 6);
+
+  document.getElementById("category").textContent =
+    isFemale ? "FEMALE OVERALL WINNERS" : "MALE OVERALL WINNERS";
+
+  [1, 2, 3].forEach((place) => {
+    const runner = group[place - 1];
+
+    document.getElementById("name" + place).textContent =
+      runner ? runner.FirstLastname : "---";
+
+    document.getElementById("time" + place).textContent =
+      runner ? formatTime(runner.Time) : "---";
+  });
+
+  document.querySelectorAll(".medal").forEach(card => {
+    card.style.animation = "none";
+    void card.offsetWidth;
+    card.style.animation = "";
+  });
+}
+
+async function loadResults() {
+  try {
+    const response = await fetch(apiURL, { cache: "no-store" });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("Unexpected JSON format");
+
+    winners = data;
+    showCategory();
+    document.getElementById("status").textContent = "";
+
+  } catch (error) {
+    document.getElementById("status").textContent =
+      "Waiting for updated results...";
+    console.error(error);
+  }
+}
+
+loadResults();
+
+setInterval(() => {
+  currentCategory = (currentCategory + 1) % 2;
+  showCategory();
+}, 10000);
+
+setInterval(loadResults, 30000);
+</script>
+
 </body>
 </html>
