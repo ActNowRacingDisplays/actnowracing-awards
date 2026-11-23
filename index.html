@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Branson Turkey Trot - Live Awards</title>
+<title>Branson Turkey Trot | Live Animated Awards</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -20,7 +20,7 @@ html, body {
 
 .awards {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding: 3vh 3vw;
   color: #fff;
   text-align: center;
@@ -94,7 +94,7 @@ h2 {
 
 #status {
   color: #E8B96A;
-  font-size: 18px;
+  font-size: clamp(12px, 1.2vw, 18px);
   margin-top: 3vh;
 }
 
@@ -126,11 +126,10 @@ h2 {
 </head>
 
 <body>
-
 <div class="awards">
   <div class="eyebrow">15TH ANNUAL • THANKSGIVING DAY</div>
   <h1>BRANSON TURKEY TROT</h1>
-  <h2 id="category">LOADING OVERALL WINNERS...</h2>
+  <h2 id="category">LOADING AWARDS...</h2>
 
   <div class="podium">
     <div class="medal silver">
@@ -159,34 +158,77 @@ h2 {
 const apiURL =
   "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
 
-let winners = [];
-let currentCategory = 0;
+let categories = [];
+let currentIndex = 0;
 
 function formatTime(value) {
   if (!value) return "---";
-  return value.replace(/^0:/, "").replace(/\.00$/, "");
+  return String(value).replace(/^0:/, "").replace(/\.00$/, "");
+}
+
+function getPlace(runner) {
+  const formulaKey = Object.keys(runner).find(key =>
+    key.startsWith("switch(")
+  );
+
+  if (!formulaKey) return null;
+
+  const place = Number(runner[formulaKey]);
+  return Number.isInteger(place) && place >= 1 && place <= 3
+    ? place
+    : null;
+}
+
+function buildCategories(data) {
+  const groups = new Map();
+
+  data.forEach(runner => {
+    const award = runner["Award Category"];
+    const gender = runner.Gender;
+    const place = getPlace(runner);
+
+    if (!award || !gender || !place) return;
+
+    const isOverall = award === "#Overall";
+    const title = isOverall
+      ? gender.toUpperCase() + " OVERALL WINNERS"
+      : award.toUpperCase();
+
+    const key = (isOverall ? "Overall" : award) + "|" + gender;
+
+    if (!groups.has(key)) {
+      groups.set(key, {
+        title: title,
+        runners: {}
+      });
+    }
+
+    groups.get(key).runners[place] = runner;
+  });
+
+  return Array.from(groups.values());
 }
 
 function showCategory() {
-  if (winners.length < 6) return;
+  if (!categories.length) return;
 
-  const isFemale = currentCategory === 0;
-  const group = isFemale
-    ? winners.slice(0, 3)
-    : winners.slice(3, 6);
+  if (currentIndex >= categories.length) {
+    currentIndex = 0;
+  }
 
-  document.getElementById("category").textContent =
-    isFemale ? "FEMALE OVERALL WINNERS" : "MALE OVERALL WINNERS";
+  const group = categories[currentIndex];
 
-  [1, 2, 3].forEach((place) => {
-    const runner = group[place - 1];
+  document.getElementById("category").textContent = group.title;
+
+  for (let place = 1; place <= 3; place++) {
+    const runner = group.runners[place];
 
     document.getElementById("name" + place).textContent =
       runner ? runner.FirstLastname : "---";
 
     document.getElementById("time" + place).textContent =
       runner ? formatTime(runner.Time) : "---";
-  });
+  }
 
   document.querySelectorAll(".medal").forEach(card => {
     card.style.animation = "none";
@@ -198,31 +240,53 @@ function showCategory() {
 async function loadResults() {
   try {
     const response = await fetch(apiURL, { cache: "no-store" });
-    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
 
     const data = await response.json();
-    if (!Array.isArray(data)) throw new Error("Unexpected JSON format");
 
-    winners = data;
+    if (!Array.isArray(data)) {
+      throw new Error("Unexpected JSON format");
+    }
+
+    const updated = buildCategories(data);
+
+    if (!updated.length) {
+      throw new Error("No award categories found");
+    }
+
+    const currentTitle = categories[currentIndex]?.title;
+
+    categories = updated;
+
+    const matchingIndex = categories.findIndex(
+      category => category.title === currentTitle
+    );
+
+    currentIndex = matchingIndex >= 0 ? matchingIndex : 0;
+
     showCategory();
     document.getElementById("status").textContent = "";
 
   } catch (error) {
     document.getElementById("status").textContent =
-      "Waiting for updated results...";
-    console.error(error);
+      "Waiting for updated race results...";
+    console.error("Awards update failed:", error);
   }
 }
 
 loadResults();
 
 setInterval(() => {
-  currentCategory = (currentCategory + 1) % 2;
+  if (!categories.length) return;
+
+  currentIndex = (currentIndex + 1) % categories.length;
   showCategory();
 }, 10000);
 
 setInterval(loadResults, 30000);
 </script>
-
 </body>
 </html>
