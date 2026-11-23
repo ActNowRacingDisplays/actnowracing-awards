@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ActNowRacing Awards Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: #101827;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h1 { color: #E8B96A; }
+    #status { font-size: 24px; margin: 30px 0; }
+    #results { font-size: 20px; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <h1>BRANSON TURKEY TROT</h1>
+  <h2>LIVE RESULTS CONNECTION TEST</h2>
+  <div id="status">Checking connection...</div>
+  <div id="results"></div>
+
+  <script>
+    const apiURL =
+      "https://api.raceresult.com/406400/PYZOJO8DWOUMSKSHNCDPLR98AS1VE0SO";
+
+    async function checkConnection() {
+      const status = document.getElementById("status");
+      const results = document.getElementById("results");
+
+      try {
+        const response = await fetch(apiURL, { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+          throw new Error("Unexpected data format");
+        }
+
+        status.textContent = "SUCCESS! Live results connected.";
+        status.style.color = "#6EEB83";
+
+        results.replaceChildren();
+        data.slice(0, 6).forEach(runner => {
+          const row = document.createElement("div");
+          row.textContent = runner.FirstLastname + " — " + runner.Time;
+          results.appendChild(row);
+        });
+      } catch (error) {
+        status.textContent = "CONNECTION FAILED";
+        status.style.color = "#FF7777";
+        results.textContent = error.message;
+      }
+    }
+
+    checkConnection();
+  </script>
+</body>
+</html>
