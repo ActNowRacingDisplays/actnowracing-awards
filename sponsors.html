@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branson Turkey Trot | Gold Sponsor Showcase</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
+background:#101827;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:radial-gradient(ellipse at center,#263246,#101827 75%);
+color:#fff;
+}
+
+.showcase{
+height:100dvh;
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:space-between;
+padding:2vh 2vw 0;
+position:relative;
+overflow:hidden;
+}
+
+header{
+text-align:center;
+position:relative;
+z-index:3;
+}
+
+.eyebrow{
+font-size:clamp(12px,1.4vw,24px);
+font-weight:900;
+color:#ffb854;
+letter-spacing:1px;
+}
+
+h1{
+font-size:clamp(24px,4vw,65px);
+color:#f6e8cf;
+font-weight:900;
+margin:1vh 0;
+text-shadow:0 4px 8px #0008;
+}
+
+h2{
+font-size:clamp(16px,2.3vw,38px);
+color:#ffcf55;
+margin:0;
+letter-spacing:2px;
+text-shadow:0 0 15px #d9a44166;
+}
+
+.leaf{
+position:absolute;
+font-size:clamp(24px,4.5vw,75px);
+filter:drop-shadow(0 0 10px #ffae4266);
+animation:sway 4s ease-in-out infinite alternate;
+z-index:2;
+}
+
+.leaf1{top:4%;left:3%}
+.leaf2{top:1%;left:10%;animation-delay:-2s}
+.leaf3{top:1%;right:10%;animation-delay:-1s}
+.leaf4{top:4%;right:3%;animation-delay:-3s}
+
+@keyframes sway{
+from{transform:rotate(-12deg)}
+to{transform:rotate(12deg)}
+}
+
+#sparkles{
+position:absolute;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.sparkle{
+position:absolute;
+background:#ffe5a0;
+border-radius:50%;
+box-shadow:0 0 8px 3px #ffd66b,0 0 22px 7px #d9a44155;
+animation:twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle{
+0%,100%{opacity:.12;transform:scale(.5)}
+50%{opacity:1;transform:scale(1.3)}
+}
+
+.stage{
+position:relative;
+width:94%;
+flex:1;
+min-height:0;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:1.5vh 0;
+z-index:2;
+}
+
+.spotlight{
+width:min(70vw,1000px);
+height:100%;
+max-height:48vh;
+padding:7px;
+border-radius:20px;
+background:linear-gradient(120deg,#946016,#ffdb75,#fff1b5,#d6a331,#946016);
+background-size:300% 300%;
+box-shadow:0 0 35px #eab74677,0 10px 30px #0008;
+animation:goldShine 5s linear infinite,enter .8s ease both;
+}
+
+@keyframes goldShine{
+0%{background-position:0% 50%}
+100%{background-position:300% 50%}
+}
+
+.logo-panel{
+background:white;
+border-radius:14px;
+width:100%;
+height:100%;
+padding:1.5vh 2vw;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.logo-panel img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+@keyframes enter{
+from{opacity:0;transform:translateY(20px) scale(.94)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.sponsor-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+grid-template-rows:repeat(3,minmax(0,1fr));
+gap:1.2vh 1.2vw;
+width:90%;
+height:100%;
+max-height:49vh;
+animation:enter .8s ease both;
+}
+
+.grid-logo{
+min-height:0;
+min-width:0;
+background:white;
+border:3px solid #d9ad46;
+border-radius:12px;
+padding:1vh 1vw;
+box-shadow:0 0 15px #d9ad4633;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.grid-logo img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.thanks{
+font-size:clamp(12px,1.5vw,24px);
+font-weight:900;
+color:#f6e8cf;
+text-align:center;
+margin:.5vh 0;
+z-index:2;
+}
+
+.countdown{
+text-align:center;
+padding:.5vh 2vw 1.2vh;
+z-index:2;
+}
+
+.countdown-label{
+color:#ffb854;
+font-size:clamp(10px,1vw,17px);
+font-weight:900;
+letter-spacing:2px;
+}
+
+.clock{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:1vw;
+margin-top:.5vh;
+}
+
+.clock-unit{
+background:#202a39;
+border:1px solid #b58b38;
+border-radius:8px;
+min-width:7vw;
+padding:.4vh 1vw;
+}
+
+.clock-number{
+font-size:clamp(20px,2.7vw,46px);
+font-weight:900;
+color:#ffda75;
+font-variant-numeric:tabular-nums;
+}
+
+.clock-label{
+font-size:clamp(8px,.8vw,13px);
+font-weight:bold;
+color:#f6e8cf;
+}
+
+.race-started{
+font-size:clamp(18px,2.5vw,40px);
+font-weight:900;
+color:#ffcf55;
+}
+
+.ticker-zone{
+width:100vw;
+flex-shrink:0;
+position:relative;
+z-index:3;
+}
+
+.ticker-row{
+height:5.5vh;
+min-height:24px;
+overflow:hidden;
+background:linear-gradient(90deg,#211b13,#302518,#211b13);
+border-top:1px solid #a97d29;
+border-bottom:1px solid #a97d29;
+margin-bottom:.5vh;
+}
+
+.ticker-track{
+display:flex;
+width:max-content;
+height:100%;
+will-change:transform;
+animation:scroll var(--duration,60s) linear infinite;
+}
+
+.ticker-row:nth-child(2) .ticker-track{
+animation-direction:reverse;
+}
+
+.ticker-group{
+display:flex;
+align-items:center;
+flex-shrink:0;
+height:100%;
+}
+
+.ticker-item{
+display:flex;
+align-items:center;
+gap:1vw;
+padding-right:2vw;
+white-space:nowrap;
+color:#ffd45c;
+font-size:clamp(14px,1.9vw,32px);
+font-weight:900;
+text-shadow:1px 2px 2px #000,0 0 8px #d9a44155;
+}
+
+.turkey{
+height:4.5vh;
+width:auto;
+object-fit:contain;
+animation:bounce .6s ease-in-out infinite alternate;
+}
+
+@keyframes bounce{
+from{transform:translateY(0) rotate(-3deg)}
+to{transform:translateY(-3px) rotate(3deg)}
+}
+
+@keyframes scroll{
+from{transform:translateX(0)}
+to{transform:translateX(-50%)}
+}
+
+.brand{
+text-align:center;
+font-size:clamp(9px,.9vw,15px);
+color:#e8b96a;
+font-weight:bold;
+letter-spacing:2px;
+padding:.5vh 0;
+z-index:3;
+}
+
+@media(max-width:700px){
+.leaf{font-size:24px}
+.leaf2,.leaf3{display:none}
+h1{font-size:5vw}
+h2{font-size:3vw}
+.spotlight{width:90vw}
+.sponsor-grid{width:100%}
+}
+
+@media(prefers-reduced-motion:reduce){
+.sparkle,.leaf,.turkey{animation:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="showcase">
+
+<div id="sparkles"></div>
+
+<div class="leaf leaf1">🍁</div>
+<div class="leaf leaf2">🍂</div>
+<div class="leaf leaf3">🍂</div>
+<div class="leaf leaf4">🍁</div>
+
+<header>
+<div class="eyebrow">15TH ANNUAL • THANKSGIVING DAY</div>
+<h1>BRANSON TURKEY TROT</h1>
+<h2 id="heading">★ GOLD SPONSOR SPOTLIGHT ★</h2>
+</header>
+
+<div class="stage" id="stage"></div>
+
+<div class="thanks" id="thanks">
+THANK YOU FOR SUPPORTING OUR COMMUNITY!
+</div>
+
+<div class="countdown">
+<div class="countdown-label" id="countdownLabel">
+COUNTDOWN TO RACE START
+</div>
+
+<div class="clock" id="clock">
+
+<div class="clock-unit" id="daysBox">
+<div class="clock-number" id="days">00</div>
+<div class="clock-label">DAYS</div>
+</div>
+
+<div class="clock-unit">
+<div class="clock-number" id="hours">00</div>
+<div class="clock-label">HOURS</div>
+</div>
+
+<div class="clock-unit">
+<div class="clock-number" id="minutes">00</div>
+<div class="clock-label">MINUTES</div>
+</div>
+
+<div class="clock-unit">
+<div class="clock-number" id="seconds">00</div>
+<div class="clock-label">SECONDS</div>
+</div>
+
+</div>
+</div>
+
+<div class="ticker-zone">
+<div class="ticker-row">
+<div class="ticker-track" id="ticker0"></div>
+</div>
+
+<div class="ticker-row">
+<div class="ticker-track" id="ticker1"></div>
+</div>
+
+<div class="ticker-row">
+<div class="ticker-track" id="ticker2"></div>
+</div>
+</div>
+
+<div class="brand">
+ACTNOWRACING.COM • PROUDLY SUPPORTING COMMUNITY EVENTS
+</div>
+
+</div>
+
+<script>
+
+const sponsors=[
+{name:"248 DENTAL",file:"248 DENTAL.jpg"},
+{name:"BRANSON BANK",file:"BRANSON BANK.jpg"},
+{name:"DAZZEE IT",file:"Dazzee.jpg"},
+{name:"FRITZ'S ADVENTURE",file:"FRITZ.jpg"},
+{name:"HOTEL GRAND VICTORIAN",file:"HOTEL GRAND VICTORIAN.jpg"},
+{name:"PARLOR DOUGHNUTS",file:"PARLOR DONUTS.jpg"},
+{name:"TABLE ROCK COMMUNITY BANK",file:"TABLEROCK BANK.jpg"},
+{name:"TAYLOR & ASSOCIATES",file:"Taylor&Assoc(1).jpg"},
+{name:"TURKEY CREEK BREWERY",file:"TURKEY CREEK BREWERY.jpg"}
+];
+
+const turkeyFile="branson_turkey_transparent.png";
+
+const spotlightTime=8000;
+const allSponsorsTime=15000;
+
+let currentIndex=0;
+let currentTicker="";
+let rotationTimer;
+
+// Preload all sponsor logos.
+
+sponsors.forEach(sponsor=>{
+const image=new Image();
+image.src=encodeURIComponent(sponsor.file);
+});
+
+// Create glowing gold sparkles.
+
+const sparkleContainer=document.getElementById("sparkles");
+
+for(let i=0;i<65;i++){
+const sparkle=document.createElement("div");
+sparkle.className="sparkle";
+const size=2+Math.random()*5;
+sparkle.style.width=size+"px";
+sparkle.style.height=size+"px";
+sparkle.style.left=Math.random()*100+"%";
+sparkle.style.top=Math.random()*100+"%";
+sparkle.style.animationDelay=-Math.random()*5+"s";
+sparkle.style.animationDuration=2+Math.random()*4+"s";
+sparkleContainer.appendChild(sparkle);
+}
+
+// Create a continuous ticker with multiple running turkeys.
+
+function buildTicker(track,label,speed,row){
+
+track.replaceChildren();
+
+const group=document.createElement("div");
+group.className="ticker-group";
+
+function addItem(){
+const item=document.createElement("div");
+item.className="ticker-item";
+
+const turkey=document.createElement("img");
+turkey.className="turkey";
+turkey.src=turkeyFile;
+turkey.alt="";
+
+const text=document.createElement("span");
+text.textContent="★ "+label+" •";
+
+item.append(turkey,text);
+group.appendChild(item);
+}
+
+track.appendChild(group);
+
+for(let i=0;i<4;i++)addItem();
+
+while(group.scrollWidth<window.innerWidth*1.5){
+addItem();
+}
+
+track.appendChild(group.cloneNode(true));
+
+const duration=group.scrollWidth/speed;
+
+track.style.setProperty("--duration",duration+"s");
+track.style.animationDelay=-(duration*row*.17)+"s";
+
+}
+
+function updateTickers(label){
+
+currentTicker=label;
+
+buildTicker(document.getElementById("ticker0"),label,48,0);
+buildTicker(document.getElementById("ticker1"),label,40,1);
+buildTicker(document.getElementById("ticker2"),label,44,2);
+
+}
+
+// Display individual sponsors.
+
+function showSponsor(){
+
+const stage=document.getElementById("stage");
+const heading=document.getElementById("heading");
+const thanks=document.getElementById("thanks");
+
+stage.replaceChildren();
+
+let duration=spotlightTime;
+
+if(currentIndex<sponsors.length){
+
+const sponsor=sponsors[currentIndex];
+
+heading.textContent="★ GOLD SPONSOR SPOTLIGHT ★";
+
+const frame=document.createElement("div");
+frame.className="spotlight";
+
+const panel=document.createElement("div");
+panel.className="logo-panel";
+
+const logo=document.createElement("img");
+logo.src=encodeURIComponent(sponsor.file);
+logo.alt=sponsor.name;
+
+panel.appendChild(logo);
+frame.appendChild(panel);
+stage.appendChild(frame);
+
+thanks.textContent="THANK YOU, "+sponsor.name+"!";
+
+updateTickers("GOLD SPONSOR • "+sponsor.name);
+
+}else{
+
+heading.textContent="★ THANK YOU TO OUR GOLD SPONSORS ★";
+
+const grid=document.createElement("div");
+grid.className="sponsor-grid";
+
+sponsors.forEach(sponsor=>{
+
+const card=document.createElement("div");
+card.className="grid-logo";
+
+const logo=document.createElement("img");
+logo.src=encodeURIComponent(sponsor.file);
+logo.alt=sponsor.name;
+
+card.appendChild(logo);
+grid.appendChild(card);
+
+});
+
+stage.appendChild(grid);
+
+thanks.textContent="THANK YOU FOR MAKING THIS EVENT POSSIBLE!";
+
+updateTickers("THANK YOU GOLD SPONSORS • HAPPY THANKSGIVING");
+
+duration=allSponsorsTime;
+
+}
+
+currentIndex=(currentIndex+1)%(sponsors.length+1);
+
+clearTimeout(rotationTimer);
+rotationTimer=setTimeout(showSponsor,duration);
+
+}
+
+// Live countdown.
+// November 26, 2026 at 8:00 AM Central Standard Time.
+
+const raceStart=new Date("2026-11-26T08:00:00-06:00").getTime();
+
+function updateCountdown(){
+
+const remaining=raceStart-Date.now();
+
+if(remaining<=0){
+
+document.getElementById("countdownLabel").textContent="IT'S RACE TIME!";
+
+document.getElementById("clock").innerHTML=
+'<div class="race-started">HAPPY THANKSGIVING • LET\'S TROT!</div>';
+
+return;
+
+}
+
+const totalSeconds=Math.floor(remaining/1000);
+
+const days=Math.floor(totalSeconds/86400);
+const hours=Math.floor(totalSeconds/3600)%24;
+const minutes=Math.floor(totalSeconds/60)%60;
+const seconds=totalSeconds%60;
+
+document.getElementById("days").textContent=String(days).padStart(2,"0");
+document.getElementById("hours").textContent=String(hours).padStart(2,"0");
+document.getElementById("minutes").textContent=String(minutes).padStart(2,"0");
+document.getElementById("seconds").textContent=String(seconds).padStart(2,"0");
+
+document.getElementById("daysBox").style.display=days>0?"block":"none";
+
+}
+
+let resizeTimer;
+
+window.addEventListener("resize",()=>{
+
+clearTimeout(resizeTimer);
+
+resizeTimer=setTimeout(()=>{
+if(currentTicker)updateTickers(currentTicker);
+},200);
+
+});
+
+showSponsor();
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+</script>
+
+</body>
+</html>
